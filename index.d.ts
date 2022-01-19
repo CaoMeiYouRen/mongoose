@@ -12,7 +12,7 @@ declare module 'mongoose' {
     uninitialized = 99,
   }
 
-  class NativeDate extends global.Date {}
+  class NativeDate extends global.Date { }
 
   /** The Mongoose Date [SchemaType](/docs/schematypes.html). */
   export type Date = Schema.Types.Date;
@@ -192,10 +192,10 @@ declare module 'mongoose' {
      * `Mongoose: ${collectionName}.${methodName}(${methodArgs.join(', ')})`.
      */
     debug?:
-      | boolean
-      | { color?: boolean; shell?: boolean }
-      | stream.Writable
-      | ((collectionName: string, methodName: string, ...methodArgs: any[]) => void);
+    | boolean
+    | { color?: boolean; shell?: boolean }
+    | stream.Writable
+    | ((collectionName: string, methodName: string, ...methodArgs: any[]) => void);
 
     /** If set, attaches [maxTimeMS](https://docs.mongodb.com/manual/reference/operator/meta/maxTimeMS/) to every query */
     maxTimeMS?: number;
@@ -469,10 +469,10 @@ declare module 'mongoose' {
     watch(pipeline?: Array<any>, options?: mongodb.ChangeStreamOptions): mongodb.ChangeStream;
   }
 
-   /*
-   * section collection.js
-   * http://mongoosejs.com/docs/api.html#collection-js
-   */
+  /*
+  * section collection.js
+  * http://mongoosejs.com/docs/api.html#collection-js
+  */
   interface CollectionBase extends mongodb.Collection {
     /*
       * Abstract methods. Some of these are already defined on the
@@ -744,14 +744,14 @@ declare module 'mongoose' {
     updateOne(update?: UpdateQuery<this> | UpdateWithAggregationPipeline, options?: QueryOptions | null, callback?: Callback): Query<any, this>;
 
     /** Executes registered validation rules for this document. */
-    validate(options:{ pathsToSkip?: pathsToSkip }): Promise<void>;
+    validate(options: { pathsToSkip?: pathsToSkip }): Promise<void>;
     validate(pathsToValidate?: pathsToValidate, options?: any): Promise<void>;
     validate(callback: CallbackWithoutResult): void;
     validate(pathsToValidate: pathsToValidate, callback: CallbackWithoutResult): void;
     validate(pathsToValidate: pathsToValidate, options: any, callback: CallbackWithoutResult): void;
 
     /** Executes registered validation rules (skipping asynchronous validators) for this document. */
-    validateSync(options:{pathsToSkip?: pathsToSkip, [k:string]: any }): Error.ValidationError | null;
+    validateSync(options: { pathsToSkip?: pathsToSkip, [k: string]: any }): Error.ValidationError | null;
     validateSync(pathsToValidate?: Array<string>, options?: any): Error.ValidationError | null;
   }
 
@@ -1049,7 +1049,7 @@ declare module 'mongoose' {
 
   type _UpdateWriteOpResult = mongodb.UpdateWriteOpResult['result'];
   interface UpdateWriteOpResult extends _UpdateWriteOpResult {
-    upserted?: Array<{index: number, _id: any}>;
+    upserted?: Array<{ index: number, _id: any }>;
   }
 
   interface QueryOptions {
@@ -2108,11 +2108,11 @@ declare module 'mongoose' {
     }
   }
 
-  type ReturnsNewDoc = { new: true } | { returnOriginal: false } | {returnDocument: 'after'};
+  type ReturnsNewDoc = { new: true } | { returnOriginal: false } | { returnDocument: 'after' };
 
   type QueryWithHelpers<ResultType, DocType, THelpers = {}, RawDocType = DocType> = Query<ResultType, DocType, THelpers, RawDocType> & THelpers;
 
-  class Query<ResultType, DocType, THelpers = {}, RawDocType = DocType> {
+  class Query<ResultType, DocType = any, THelpers = {}, RawDocType = DocType> {
     _mongooseOptions: MongooseQueryOptions;
 
     /**
@@ -2564,11 +2564,11 @@ declare module 'mongoose' {
 
   type UpdateWithAggregationPipeline = UpdateAggregationStage[];
   type UpdateAggregationStage = { $addFields: any } |
-    { $set: any } |
-    { $project: any } |
-    { $unset: any } |
-    { $replaceRoot: any } |
-    { $replaceWith: any };
+  { $set: any } |
+  { $project: any } |
+  { $unset: any } |
+  { $replaceRoot: any } |
+  { $replaceWith: any };
 
   type __UpdateDefProperty<T> =
     0 extends (1 & T) ? T : // any
@@ -2585,12 +2585,12 @@ declare module 'mongoose' {
 
   export type DocumentDefinition<T> = {
     [K in keyof Omit<T, Exclude<keyof Document, '_id' | 'id' | '__v'>>]:
-      [Extract<T[K], mongodb.ObjectId>] extends [never]
-      ? T[K] extends TreatAsPrimitives
-        ? T[K]
-        : LeanDocumentElement<T[K]>
-      : T[K] | string;
-    };
+    [Extract<T[K], mongodb.ObjectId>] extends [never]
+    ? T[K] extends TreatAsPrimitives
+    ? T[K]
+    : LeanDocumentElement<T[K]>
+    : T[K] | string;
+  };
 
   type actualPrimitives = string | boolean | number | bigint | symbol | null | undefined;
   type TreatAsPrimitives = actualPrimitives |
@@ -3057,5 +3057,5 @@ declare module 'mongoose' {
   export type ConnectionOptions = ConnectOptions;
 
   /* for ts-mongoose */
-  class mquery {}
+  class mquery { }
 }
